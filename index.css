@@ -1,3 +1,23 @@
 #heading {
     color: red;
 }
+.image {
+    height: 35px;
+    width: 35px;
+    border-radius: 100px;
+    margin-top: 6px;
+}
+.logo {
+  font-size: 24px;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  background-color: #333;
+  color: #fff;
+}
+.user-icon {
+  font-size: 24px;
+}

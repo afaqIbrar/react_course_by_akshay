@@ -2,9 +2,10 @@
   "name": "reactbyakshay",
   "version": "1.0.0",
   "description": "This is react course by akshay saini",
-    
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "keywords": [
     "reat"
@@ -17,9 +18,10 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.0.1"
   },
-  "browserList" : [
+  "browserList": [
     "last 2 version"
   ]
 }
