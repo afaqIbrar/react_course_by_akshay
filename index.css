@@ -1,23 +1,40 @@
-#heading {
-    color: red;
-}
-.image {
-    height: 35px;
-    width: 35px;
-    border-radius: 100px;
-    margin-top: 6px;
-}
-.logo {
-  font-size: 24px;
-}
-.container {
+.header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 0px 20px;
-  background-color: #333;
-  color: #fff;
+  border: 1px solid black;
 }
-.user-icon {
+.logo {
+  width: 120px;
+  padding-top: 5px;
+}
+.nav-items {
+  padding: 0px 20px;
+}
+.nav-items > ul {
+  display: flex;
+  list-style-type: none;
   font-size: 24px;
+}
+.nav-items > ul > li {
+  padding: 10px;
+  margin: 10px;
+}
+.res-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.res-card {
+  margin: 5px;
+  width: 200px;
+  padding: 5px;
+}
+.res-card:hover {
+  border: 0.5px solid black;
+  cursor: pointer;
+}
+.search {
+  padding: 10px;
+}
+.res-logo {
+  width: 100%;
 }
