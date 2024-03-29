@@ -42,3 +42,10 @@
   margin: 10px;
   cursor: pointer;
 }
+.footer {
+  border: 0.5px solid black;
+}
+.search-container {
+  margin: 10px;
+  cursor: pointer;
+}
