@@ -2,6 +2,8 @@ import RestaurantCard from './RestaurantCard';
 import { useState, useEffect } from 'react';
 import ShimmerCard from './ShimmerCards';
 import { Link } from 'react-router-dom';
+import useOnlineStatus from '../utils/useOnlineStatus';
+
 const Body = () => {
   //Local State Variable - Super Powerful variable
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -14,6 +16,22 @@ const Body = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    const data = await fetch(
+      'https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448869999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
+    );
+    const json = await data.json();
+    setNextOffSet(json?.data?.pageOffset?.nextOffset);
+    setCsrf(json.csrfToken);
+    const restaurants =
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants;
+    setListOfRestaurants(restaurants);
+    setFilteredRestaurants(restaurants);
+  };
+
+  const onlineStatus = useOnlineStatus();
 
   async function postData(url = '', data = {}) {
     // Default options are marked with *
@@ -96,21 +114,6 @@ const Body = () => {
     return () => window.removeEventListener('scroll', handleInfiniteScroll);
   }, []);
 
-  const fetchData = async () => {
-    const data = await fetch(
-      'https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448869999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
-    );
-    const json = await data.json();
-    setNextOffSet(json?.data?.pageOffset?.nextOffset);
-    setCsrf(json.csrfToken);
-    const restaurants =
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants;
-    setListOfRestaurants(restaurants);
-    console.log('restt', restaurants);
-    setFilteredRestaurants(restaurants);
-  };
-
   const filterTopRatedRestaurants = () => {
     const filteredListRestaurants = listOfRestaurants.filter(
       (res) => res.info.avgRating > 4
@@ -123,6 +126,13 @@ const Body = () => {
     });
     setFilteredRestaurants(filterData);
   };
+
+  if (onlineStatus === false)
+    return (
+      <h1>
+        Looks like you are offline!! Please check your internet connection
+      </h1>
+    );
 
   if (listOfRestaurants.length === 0) {
     return <ShimmerCard />;
