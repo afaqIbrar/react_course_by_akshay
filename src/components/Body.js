@@ -3,40 +3,34 @@ import { useState, useEffect } from 'react';
 import ShimmerCard from './ShimmerCards';
 import { Link } from 'react-router-dom';
 import useOnlineStatus from '../utils/useOnlineStatus';
-import useRestaurants from '../utils/useRestaurants';
+// import useRestaurants from '../utils/useRestaurants';
 const Body = () => {
-  //Local State Variable - Super Powerful variable
-
   const [searchText, setSearchText] = useState('');
-  // const [loading, setLoading] = useState(false);
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [nextOffSet, setNextOffSet] = useState(null);
+  const [csrf, setCsrf] = useState(null);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  // const fetchData = async () => {
-  //   const data = await fetch(
-  //     'https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448869999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
-  //   );
-  //   const json = await data.json();
-  //   setNextOffSet(json?.data?.pageOffset?.nextOffset);
-  //   setCsrf(json.csrfToken);
-  //   const restaurants =
-  //     json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-  //       ?.restaurants;
-  //   setListOfRestaurants(restaurants);
-  //   setFilteredRestaurants(restaurants);
-  // };
+  const fetchData = async () => {
+    const data = await fetch(
+      'https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448869999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
+    );
+    const json = await data.json();
+    setNextOffSet(json?.data?.pageOffset?.nextOffset);
+    setCsrf(json.csrfToken);
+    const restaurants =
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants;
+    setListOfRestaurants(restaurants);
+    setFilteredRestaurants(restaurants);
+    console.log('restaurants', json);
+  };
 
   const onlineStatus = useOnlineStatus();
-  const { listOfRestaurants, filteredRestaurants, nextOffset, csrf } =
-    useRestaurants();
-  console.log('data', {
-    listOfRestaurants,
-    filteredRestaurants,
-    nextOffset,
-    csrf
-  });
 
   const filterTopRatedRestaurants = () => {
     const filteredListRestaurants = listOfRestaurants.filter(
@@ -67,10 +61,10 @@ const Body = () => {
   ) : (
     <div className="body">
       <div className="filter">
-        <div className="search-container">
+        <div className="search-container m-4 p-4">
           <input
             type="text"
-            className="search-input"
+            className="border border-solid border-black"
             placeholder="Search"
             value={searchText}
             onChange={(e) => {
@@ -78,15 +72,21 @@ const Body = () => {
               setSearchText(e.target.value);
             }}
           />
-          <button className="search-btn" onClick={filterSearchData}>
+          <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
+            onClick={filterSearchData}
+          >
             Search
           </button>
+          <button
+            className="px-4 py-2 bg-gray-100 rounded-lg"
+            onClick={filterTopRatedRestaurants}
+          >
+            Top Rated Restaurants
+          </button>
         </div>
-        <button className="filter-btn" onClick={filterTopRatedRestaurants}>
-          Top Rated Restaurants
-        </button>
       </div>
-      <div className="res-container">
+      <div className="flex flex-wrap">
         {filteredRestaurants?.map((restaurant) => {
           return (
             <Link
