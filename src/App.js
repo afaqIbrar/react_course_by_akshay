@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Header } from './components/Header';
 import Body from './components/Body';
@@ -12,6 +12,8 @@ import RestaurantMenuPage from './components/RestaurantMenuPage';
 
 const Grocery = lazy(() => import('./components/Grocery'));
 const About = lazy(() => import('./components/About'));
+
+import UserContext from './utils/UserContext';
 // chunking
 // Code Splitting
 // Dynamic bundling
@@ -20,12 +22,26 @@ const About = lazy(() => import('./components/About'));
 // dynamic imoprt
 
 const AppLayout = () => {
+  const [userName, setUserName] = useState();
+
+  useEffect(() => {
+    const data = { name: 'Afaq Ibrar' };
+    setUserName(data.name);
+  }, []);
+
   return (
-    <div className="app">
-      <Header />
-      <Outlet />
-      <Footer />
-    </div>
+    //Here it will have value default user
+    <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+      {/**This are will have context value as userName */}
+      <div className="app">
+        <UserContext.Provider value={{ loggedInUser: userName }}>
+          {/**This are will have context value as Test */}
+          <Header />
+        </UserContext.Provider>
+        <Outlet />
+        {/* <Footer /> */}
+      </div>
+    </UserContext.Provider>
   );
 };
 
