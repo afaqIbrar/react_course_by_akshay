@@ -8,12 +8,14 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import Contact from './components/Contact';
 import Error from './components/Error';
 import RestaurantMenuPage from './components/RestaurantMenuPage';
+import Cart from './components/Cart';
 // import Grocery from './components/Grocery';
 
 const Grocery = lazy(() => import('./components/Grocery'));
 const About = lazy(() => import('./components/About'));
-
 import UserContext from './utils/UserContext';
+import { Provider } from 'react-redux';
+import appStore from './utils/appStore';
 // chunking
 // Code Splitting
 // Dynamic bundling
@@ -30,18 +32,15 @@ const AppLayout = () => {
   }, []);
 
   return (
-    //Here it will have value default user
-    <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-      {/**This are will have context value as userName */}
-      <div className="app">
-        <UserContext.Provider value={{ loggedInUser: userName }}>
-          {/**This are will have context value as Test */}
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+        <div className="app">
           <Header />
-        </UserContext.Provider>
-        <Outlet />
-        {/* <Footer /> */}
-      </div>
-    </UserContext.Provider>
+          <Outlet />
+          {/* <Footer /> */}
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -77,6 +76,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/restaurants/:resId',
         element: <RestaurantMenuPage />
+      },
+      {
+        path: '/cart',
+        element: <Cart />
       }
     ],
     errorElement: <Error />

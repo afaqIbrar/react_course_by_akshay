@@ -38,3 +38,12 @@ import <ComponentName/variableName> from '\*path';
 - Written inside react and we have to import it.
   - useState() - superPowerful State variables in react
   - useEffect()
+
+# Redux ToolKit
+
+- Install Libraries (@redux/toolkit and react-redux)
+- Build our store
+- Connect our store to our app
+- Create a cart Slice
+- Dispatch Action
+- Selector

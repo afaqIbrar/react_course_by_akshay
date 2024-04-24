@@ -3,7 +3,9 @@ import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useOnlineStatus from '../utils/useOnlineStatus';
 import UserContext from '../utils/UserContext';
+import { useSelector } from 'react-redux';
 export const Header = () => {
+  const cartItems = useSelector((store) => store.cart.items);
   const [btnNameReact, setBtnNameReact] = useState('Login');
   //This use effect will be called after every render of that component as there is no dependency array
   // useEffect(() => {
@@ -46,7 +48,9 @@ export const Header = () => {
           <li className="px-4">
             <Link to="/grocery">Grocery</Link>
           </li>
-          <li className="px-4">Cart</li>
+          <li className="px-4 font-bold text-xl">
+            <Link to="/cart">Cart - ({cartItems.length} items)</Link>
+          </li>
           <li className="px-4">
             <button
               className="login"
