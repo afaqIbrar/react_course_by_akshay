@@ -47,3 +47,22 @@ import <ComponentName/variableName> from '\*path';
 - Create a cart Slice
 - Dispatch Action
 - Selector
+
+# Types of Testing
+
+- Unit Testing
+- Integration Testing
+- End to End Testing - E2E Testing
+
+# Setting up Teting in our app
+
+- Intall React Testing Library
+- Install Jest
+- Install Babel dependencies
+- Configure babel
+- Configure Parcel Config file to disable default babel traspilation
+- Jest Configuration - npx jest --init
+- install jsdom library
+- install @babel/preset-react - to make jsx work in test cases
+- include @babel/preset-react inside my babel config file
+- Install @testing-library/jest-dom

@@ -63,7 +63,9 @@ export const Header = () => {
               {btnNameReact}
             </button>
           </li>
-          <li className="px-4 font-bold">{loggedInUser}</li>
+          <li data-testid="liUserName" className="px-4 font-bold">
+            {loggedInUser}
+          </li>
         </ul>
       </div>
     </div>

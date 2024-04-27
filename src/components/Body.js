@@ -36,7 +36,7 @@ const Body = () => {
 
   const filterTopRatedRestaurants = () => {
     const filteredListRestaurants = listOfRestaurants.filter(
-      (res) => res.info.avgRating > 4
+      (res) => res.info.avgRating > 4.2
     );
     setFilteredRestaurants(filteredListRestaurants);
   };
@@ -66,6 +66,7 @@ const Body = () => {
         <div className="search-container m-4 p-4">
           <input
             type="text"
+            data-testid="SearchInput"
             className="border border-solid border-black"
             placeholder="Search"
             value={searchText}
@@ -89,6 +90,7 @@ const Body = () => {
           <label className="p-4">User Name :</label>
           <input
             type="text"
+            data-testid="UserNameInput"
             value={loggedInUser}
             className="border border-black w-40 pl-2"
             onChange={(e) => setUserName(e.target.value)}
